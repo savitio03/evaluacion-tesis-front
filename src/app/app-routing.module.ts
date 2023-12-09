@@ -1,10 +1,33 @@
+import { EstudiantesModule } from './componentes/dashboard/estudiantes/estudiantes.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./componentes/login/login.module').then((m) => m.LoginModule),
+  },
+  {
+    path: 'evaluadores',
+    loadChildren: () =>
+      import('./componentes/dashboard/evaluadores/evaluadores.module').then(
+        (m) => m.EvaluadoresModule
+      ),
+  },
+  {
+    path: 'estudiantes',
+    loadChildren: () =>
+      import('./componentes/dashboard/estudiantes/estudiantes.module').then(
+        (m) => m.EstudiantesModule
+      ),
+  },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -1,0 +1,47 @@
+/*Semibold*/
+
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Orbitron&family=Titillium+Web:wght@600&display=swap");
+
+/*Regular*/
+
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@200&family=Orbitron&family=Titillium+Web:wght@400;600&display=swap");
+
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 30px;
+  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+  border-radius: 5px;
+  border: 1px solid black;
+  margin-right: 300px;
+  margin-left: 300px;
+  background-color: #f7f7f7;
+  padding-bottom: 30px;
+  padding-top:30px;
+}
+
+.welcome-text {
+  font-size: 30px;
+  margin-bottom: 20px;
+}
+
+.login-form {
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.full-width {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.register-text {
+  margin-top: 20px;
+  text-align: center;
+}
