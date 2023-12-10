@@ -1,9 +1,12 @@
+import { RolUsuarioEnum } from './../../models/enums/RolUsuarioEnum';
+import { ProgramaEnum } from './../../models/enums/ProgramaEnum';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SesionService } from '../../services/sesion.service';
 import { Usuario } from '../../models/clases/Usuario';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogoComponent } from '../../compartidos/dialogo/dialogo.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -16,7 +19,8 @@ export class InicioSesionComponent {
   constructor(
     private fb: FormBuilder,
     private sesionService: SesionService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
     this.loginForm = this.fb.group({
       usuario: ['', Validators.required],
@@ -51,32 +55,55 @@ export class InicioSesionComponent {
     }
   }
 
+  /**
+   * Para cuando el servidor responde correctamente
+   * @param response
+   */
   private handleSuccess(response: any): void {
     console.log('Respuesta del servidor:', response);
 
-   // this.abrirDialogoErrorFuncional();
+    // Guardar datos en localStorage
+    localStorage.setItem('usuario', JSON.stringify(response));
+
+    if (response.rol == RolUsuarioEnum.PROFESOR) {
+      this.router.navigate(['/evaluadores']);
+    } else if (response.rol == RolUsuarioEnum.ESTUDIANTE) {
+      this.router.navigate(['/estudiantes']);
+    }
   }
 
+  /**
+   * Para cuando el servidor responde con error
+   * @param error
+   */
   private handleError(error: any): void {
     console.error('Error al iniciar sesión:', error);
 
     this.abrirDialogoErrorFuncional();
   }
 
+  /**
+   * Para cuando el servidor responde con error de credenciales
+   */
   abrirDialogoErrorCredenciales() {
     this.dialog.open(DialogoComponent, {
       data: {
         mensaje: 'Error al iniciar sesión',
-        mensajeDialogo: 'Credenciales inválidas. Verifica tu usuario y contraseña.',
+        mensajeDialogo:
+          'Credenciales inválidas. Verifica tu usuario y contraseña.',
       },
     });
   }
 
+  /**
+   * Para cuando el servidor responde con error funcional
+   */
   abrirDialogoErrorFuncional() {
     this.dialog.open(DialogoComponent, {
       data: {
         mensaje: 'Error al iniciar sesión',
-        mensajeDialogo: 'Ha ocurrido un suceso inesperado. Inténtalo de nuevo más tarde.',
+        mensajeDialogo:
+          'Ha ocurrido un suceso inesperado. Inténtalo de nuevo más tarde.',
       },
     });
   }

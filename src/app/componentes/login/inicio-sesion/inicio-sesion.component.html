@@ -6,22 +6,16 @@
   font-family: 'Titillium Web', sans-serif;">Bienvenido</h1>
   <form class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <mat-form-field class="full-width">
-      <mat-label style="font-family: 'Kanit', sans-serif;
-      font-family: 'Orbitron', sans-serif;
-      font-family: 'Titillium Web', sans-serif;">Usuario</mat-label>
+      <mat-label class="estilos">Usuario</mat-label>
       <input matInput formControlName="usuario" />
     </mat-form-field>
 
     <mat-form-field class="full-width">
-      <mat-label style="font-family: 'Kanit', sans-serif;
-      font-family: 'Orbitron', sans-serif;
-      font-family: 'Titillium Web', sans-serif;">Password</mat-label>
+      <mat-label class="estilos">Password</mat-label>
       <input matInput type="password" formControlName="password" />
     </mat-form-field>
 
-    <button mat-raised-button class="full-width" style="background-color: #d20000;color: white; font-family: 'Kanit', sans-serif;
-    font-family: 'Orbitron', sans-serif;
-    font-family: 'Titillium Web', sans-serif;">Ingresar</button>
+    <button mat-raised-button class="full-width estilos" style="background-color: #d20000;color: white;">Ingresar</button>
   </form>
 
   <p class="register-text">¿No tienes cuenta? Regístrate</p>

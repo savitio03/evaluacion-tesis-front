@@ -1,5 +1,8 @@
 <p>
   <mat-toolbar class="D20000">
     <span>{{title}}</span>
+    <span class="example-spacer"></span>
+    <span class="bienvenido">Bienvenido, {{nombreUsuario}}</span>
+    <mat-icon matTooltip="Cerrar sesión" (click)="cerrarSesion()">exit_to_app</mat-icon>
   </mat-toolbar>
 </p>

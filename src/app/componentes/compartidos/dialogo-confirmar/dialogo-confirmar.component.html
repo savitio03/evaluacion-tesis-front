@@ -1,0 +1,6 @@
+<h1 mat-dialog-title class="estilos">Confirmar</h1>
+<div mat-dialog-content>{{ data.mensaje }}</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="cerrarDialogo()" class="estilos">Cancelar</button>
+  <button mat-button color="warn" (click)="confirmarAccion()" class="estilos">Aceptar</button>
+</div>
