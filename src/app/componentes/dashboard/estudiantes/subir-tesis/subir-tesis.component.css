@@ -1,0 +1,34 @@
+.container {
+  box-shadow: 0px 0px 10px 0px rgba(233, 38, 38, 0.75);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+label{
+  font-size: 15px;
+}
+
+button {
+  border-radius: 5px;
+  background-color: #d20000;
+  color: white;
+  border-color: #d20000;
+  width: 100px;
+}
+
+button:hover {
+  background-color: #ff0606;
+  color: white;
+  border-color: #ff0606;
+}
+
+button:active {
+  background-color: #ff0606;
+  color: white;
+  border-color: #ff0606;
+}
+
+input, select, textarea{
+  border-radius: 5px;
+  border-color: #000000;
+}

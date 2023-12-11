@@ -14,6 +14,10 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DialogoConfirmarComponent } from './dialogo-confirmar/dialogo-confirmar.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule } from '@angular/material/table';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatOptionModule } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -21,7 +25,7 @@ import { DialogoConfirmarComponent } from './dialogo-confirmar/dialogo-confirmar
     TablaComponent,
     TopComponent,
     DialogoComponent,
-    DialogoConfirmarComponent,
+    DialogoConfirmarComponent
   ],
   imports: [
     RouterModule,
@@ -34,6 +38,10 @@ import { DialogoConfirmarComponent } from './dialogo-confirmar/dialogo-confirmar
     MatSidenavModule,
     MatListModule,
     MatTooltipModule,
+    NgbModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatOptionModule
   ],
   exports: [
     TopBarComponent,
@@ -48,6 +56,10 @@ import { DialogoConfirmarComponent } from './dialogo-confirmar/dialogo-confirmar
     MatSidenavModule,
     MatListModule,
     MatTooltipModule,
+    NgbModule,
+    MatTableModule,
+    ReactiveFormsModule,
+    MatOptionModule
   ],
 })
 export class CompartidosModule {}

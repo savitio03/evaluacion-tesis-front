@@ -38,13 +38,13 @@ export class TesisService {
     );
   }
 
-  consultarTesisPorEstudiante(idEstudiante: ProgramaEnum): Observable<any> {
+  consultarTesisPorEstudiante(idEstudiante: number): Observable<any> {
     return this.http.get<TesisOut>(
       `${this.apiUrl}/consultarTesisEstudiante?idEstudiante=${idEstudiante}`
     );
   }
 
-  consultarTesisPorevaluador(idEvaluador: ProgramaEnum): Observable<any> {
+  consultarTesisPorevaluador(idEvaluador: number): Observable<any> {
     return this.http.get<TesisOut>(
       `${this.apiUrl}/consultarTesisEvaluador?idEvaluador=${idEvaluador}`
     );

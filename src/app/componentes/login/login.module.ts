@@ -7,11 +7,10 @@ import { CompartidosModule } from '../compartidos/compartidos.module';
 import { LoginRoutingModule } from './login-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { SesionService } from '../services/sesion.service';
-import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [InicioSesionComponent, RegistrarseComponent, LoginComponent],
-  imports: [CommonModule, CompartidosModule, LoginRoutingModule, HttpClientModule, ReactiveFormsModule],
+  imports: [CommonModule, CompartidosModule, LoginRoutingModule, HttpClientModule],
   providers: [SesionService],
 })
 export class LoginModule {}

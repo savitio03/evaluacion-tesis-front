@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
+import { ProgramaEnum } from 'src/app/componentes/models/enums/ProgramaEnum';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
 
 @Component({
@@ -11,7 +13,22 @@ import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum'
   styleUrls: ['./subir-tesis.component.css'],
 })
 export class SubirTesisComponent {
-  constructor(public dialog: MatDialog, private router: Router) {}
+  formularioTesis: FormGroup;
+  programasEnum = ProgramaEnum;
+
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private fb: FormBuilder
+  ) {
+    this.formularioTesis = this.fb.group({
+      nombre: ['', Validators.required],
+      programaEnum: ['', Validators.required],
+      descripcion: [''],
+      estudiante2: [''],
+      archivo: [''],
+    });
+  }
 
   ngOnInit(): void {
     // Obtener datos del localStorage
@@ -47,5 +64,16 @@ export class SubirTesisComponent {
         mensajeDialogo: mensajeDialogo,
       },
     });
+  }
+
+  onSubmit() {
+    // Aquí puedes manejar la lógica de envío del formulario
+    console.log(this.formularioTesis.value);
+    // Por ejemplo, podrías enviar los datos al servidor
+  }
+
+  keys(): Array<string> {
+    var keys = Object.keys(this.programasEnum);
+    return keys.slice(keys.length / 2);
   }
 }

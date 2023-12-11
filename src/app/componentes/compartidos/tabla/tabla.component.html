@@ -1,1 +1,23 @@
-<p>tabla works!</p>
+<table mat-table [dataSource]="config.datos" class="mat-elevation-z8">
+  <ng-container *ngFor="let columna of config.columnas; let i = index" [matColumnDef]="columna">
+    <th mat-header-cell *matHeaderCellDef>{{ columna }}</th>
+    <td mat-cell *matCellDef="let dato">
+
+      <ng-container *ngIf="columna !== 'Acciones'; else accionesColumna">
+        {{ dato[config.dato[i]] }}
+      </ng-container>
+      <ng-template #accionesColumna>
+        <div class="button-row">
+          <button mat-raised-button color="primary" (click)="editarDato(dato)">Editar</button>
+          <button mat-raised-button color="accent" (click)="verDetalle(dato)">Ver Detalle</button>
+        </div>
+      </ng-template>
+    </td>
+  </ng-container>
+
+  <!-- Definición de las filas -->
+  <tr mat-header-row *matHeaderRowDef="config.columnas"></tr>
+  <tr mat-row *matRowDef="let row; columns: config.columnas;"></tr>
+</table>
+
+<mat-divider></mat-divider>

@@ -1,1 +1,114 @@
-<p>registrarse works!</p>
+<app-top></app-top>
+
+<div class="container mt-4">
+  <form [formGroup]="formulario" (ngSubmit)="onSubmit()">
+
+    <!-- Sección: Información personal -->
+    <div class="mb-3">
+      <div class="text-center">
+        <h3 class="titulos">Información personal</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label for="nombre" class="form-label estilos">Primer nombre</label>
+          <input type="text" class="form-control estilos" id="nombre" name="nombre" formControlName="nombre" required>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="segundoNombre" class="form-label estilos">Segundo nombre</label>
+          <input type="text" class="form-control estilos" id="segundoNombre" name="segundoNombre" formControlName="segundoNombre">
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="apellido" class="form-label estilos">Primer apellido</label>
+          <input type="text" class="form-control estilos" id="apellido" name="apellido" formControlName="apellido" required>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="segundoApellido" class="form-label estilos">Segundo apellido</label>
+          <input type="text" class="form-control estilos" id="segundoApellido" name="segundoApellido" formControlName="segundoApellido">
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="codigoCarnet" class="form-label estilos">Código carnet</label>
+          <input type="number" class="form-control estilos" id="codigoCarnet" name="codigoCarnet" formControlName="codigoCarnet" required>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="sexoEnum" class="form-label estilos">Género</label>
+          <select class="form-select estilos" id="sexoEnum" name="sexoEnum" formControlName="sexoEnum">
+            <option *ngFor="let sexo of keysSexo()">
+              {{ sexo }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="tipoIdentificacionEnum" class="form-label estilos">Tipo identificación</label>
+          <select class="form-select estilos" id="tipoIdentificacionEnum" name="tipoIdentificacionEnum" formControlName="tipoIdentificacionEnum">
+            <option *ngFor="let tipo of keysTipoIdentificacion()">
+              {{ tipo }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="numeroIdenticacion" class="form-label estilos">Identificación</label>
+          <input type="number" class="form-control estilos" id="numeroIdenticacion" name="numeroIdenticacion" formControlName="numeroIdenticacion" required>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sección: Detalles de usuario -->
+    <div class="mb-3">
+      <div class="text-center">
+        <h3 class="titulos">Detalles de usuario</h3>
+      </div>
+
+      <div class="row">
+        <div class="col-md-6 mb-2">
+          <label for="rol" class="form-label estilos">Rol</label>
+          <select class="form-select estilos" id="rol" name="rol" formControlName="rol">
+            <option *ngFor="let rol of keyRol()">
+              {{ rol }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="numeroCelular" class="form-label estilos">Número celular</label>
+          <input type="number" class="form-control estilos" id="numeroCelular" name="numeroCelular" formControlName="numeroCelular">
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="programaEnum" class="form-label estilos">Programa</label>
+          <select class="form-select estilos" id="programaEnum" name="programaEnum" formControlName="programaEnum">
+            <option *ngFor="let item of keys()">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="correo" class="form-label estilos">Correo</label>
+          <input type="email" class="form-control estilos" id="correo" name="correo" formControlName="correo" required>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="password" class="form-label estilos">Contraseña</label>
+          <input type="password" class="form-control estilos" id="password" name="password" formControlName="password" required>
+        </div>
+
+        <div class="col-md-6 mb-2">
+          <label for="confirmarPassword" class="form-label estilos">Confirmar contraseña</label>
+          <input type="password" class="form-control estilos" id="confirmarPassword" name="confirmarPassword" formControlName="confirmarPassword" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-primary estilos">Enviar</button>
+    </div>
+  </form>
+</div>

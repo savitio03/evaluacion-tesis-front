@@ -1,1 +1,15 @@
-<p>evaluaciones works!</p>
+<!-- Template para cuando no hay tesis -->
+<ng-template #mensajeNoTesis>
+  <div class="mensaje-no-tesis">
+    <h3>No ha subido ninguna tesis.</h3>
+  </div>
+</ng-template>
+
+<!-- Mostrar el mensaje o la tabla según si hay tesis o no -->
+<div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
+  <app-tabla [config]="{
+    columnas: ['ID', 'Nombre tesis', 'Estado', 'Programa', 'Evaluador', 'Acciones'],
+    dato:['idTesis', 'nombre', 'estadoTesisEnum', 'programaEnum', 'evaluador.nombreCompleto'],
+    datos: tesis
+  }"></app-tabla>
+</div>

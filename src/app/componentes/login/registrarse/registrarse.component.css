@@ -1,0 +1,41 @@
+.container {
+  box-shadow: 0px 0px 10px 0px rgba(233, 38, 38, 0.75);
+  border-radius: 5px;
+  padding: 20px;
+}
+
+label{
+  font-size: 15px;
+}
+
+button {
+  border-radius: 5px;
+  background-color: #d20000;
+  color: white;
+  border-color: #d20000;
+  width: 100px;
+}
+
+button:hover {
+  background-color: #ff0606;
+  color: white;
+  border-color: #ff0606;
+}
+
+button:active {
+  background-color: #ff0606;
+  color: white;
+  border-color: #ff0606;
+}
+
+input, select, textarea{
+  border-radius: 5px;
+  border-color: #000000;
+}
+
+.titulos{
+  font-size: 25px;
+  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
