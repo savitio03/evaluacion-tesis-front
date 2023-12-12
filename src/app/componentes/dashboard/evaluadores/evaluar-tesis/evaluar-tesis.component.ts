@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
+import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
 
@@ -11,6 +12,9 @@ import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum'
   styleUrls: ['./evaluar-tesis.component.css'],
 })
 export class EvaluarTesisComponent {
+
+  tesis: Tesis[] = [];
+
   constructor(public dialog: MatDialog, private router: Router) {}
 
   ngOnInit(): void {

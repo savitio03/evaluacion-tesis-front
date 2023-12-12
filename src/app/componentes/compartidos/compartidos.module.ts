@@ -18,6 +18,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { MatOptionModule } from '@angular/material/core';
     NgbModule,
     MatTableModule,
     ReactiveFormsModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     TopBarComponent,
@@ -59,7 +61,8 @@ import { MatOptionModule } from '@angular/material/core';
     NgbModule,
     MatTableModule,
     ReactiveFormsModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSelectModule
   ],
 })
 export class CompartidosModule {}

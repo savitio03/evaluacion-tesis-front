@@ -6,6 +6,7 @@ import { ProgramaEnum } from '../../models/enums/ProgramaEnum';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { SexoEnum } from '../../models/enums/SexoEnum';
+import { DialogoComponent } from '../../compartidos/dialogo/dialogo.component';
 
 @Component({
   selector: 'app-registrarse',
@@ -19,6 +20,7 @@ export class RegistrarseComponent {
   tipoIdentificacionEnum = TipoIdentificacionEnum;
   rol = RolUsuarioEnum;
 
+  seleccionado = false;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -30,7 +32,6 @@ export class RegistrarseComponent {
       apellido: ['', Validators.required],
       segundoApellido: [''],
       codigoCarnet: ['', Validators.required],
-
       tipoIdentificacionEnum: ['', Validators.required],
       numeroIdenticacion: ['', Validators.required],
       sexoEnum: ['', Validators.required],
@@ -38,6 +39,7 @@ export class RegistrarseComponent {
       numeroCelular: [''],
       correo: ['', Validators.required],
       password: ['', Validators.required],
+      confirmarPassword: ['', Validators.required],
       programaEnum: ['', Validators.required],
     });
   }
@@ -45,6 +47,19 @@ export class RegistrarseComponent {
   onSubmit() {
     // Aquí puedes manejar la lógica de envío del formulario
     console.log(this.formulario.value);
+
+    if (this.formulario.valid) {
+      if (
+        this.formulario.get('password')?.value !=
+        this.formulario.get('confirmarPassword')?.value
+      ) {
+        this.dialogo('Error', 'Las contraseñas no coinciden.');
+      } else {
+        this.dialogo('Registro exitoso', 'Se ha registrado correctamente.');
+        this.router.navigate(['/inicio-sesion']);
+      }
+    }
+
     // Por ejemplo, podrías enviar los datos al servidor
   }
 
@@ -66,5 +81,14 @@ export class RegistrarseComponent {
   keysTipoIdentificacion(): Array<string> {
     var keys = Object.keys(this.tipoIdentificacionEnum);
     return keys.slice(keys.length / 2);
+  }
+
+  dialogo(mensaje: string, mensajeDialogo: string) {
+    this.dialog.open(DialogoComponent, {
+      data: {
+        mensaje: mensaje,
+        mensajeDialogo: mensajeDialogo,
+      },
+    });
   }
 }

@@ -29,6 +29,7 @@ export class InicioSesionComponent {
   }
 
   onSubmit() {
+  console.log(this.loginForm.value);
     if (this.loginForm.valid) {
       const usuario: Usuario = {
         correo: this.loginForm.get('usuario')?.value,

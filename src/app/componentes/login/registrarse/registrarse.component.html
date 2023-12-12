@@ -11,52 +11,69 @@
 
       <div class="row">
         <div class="col-md-6 mb-2">
-          <label for="nombre" class="form-label estilos">Primer nombre</label>
-          <input type="text" class="form-control estilos" id="nombre" name="nombre" formControlName="nombre" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Primer nombre</mat-label>
+            <input matInput formControlName="nombre" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="segundoNombre" class="form-label estilos">Segundo nombre</label>
-          <input type="text" class="form-control estilos" id="segundoNombre" name="segundoNombre" formControlName="segundoNombre">
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Segundo nombre</mat-label>
+            <input matInput formControlName="segundoNombre" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="apellido" class="form-label estilos">Primer apellido</label>
-          <input type="text" class="form-control estilos" id="apellido" name="apellido" formControlName="apellido" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Primer apellido</mat-label>
+            <input matInput formControlName="apellido" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="segundoApellido" class="form-label estilos">Segundo apellido</label>
-          <input type="text" class="form-control estilos" id="segundoApellido" name="segundoApellido" formControlName="segundoApellido">
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Segundo apellido</mat-label>
+            <input matInput formControlName="segundoApellido" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="codigoCarnet" class="form-label estilos">Código carnet</label>
-          <input type="number" class="form-control estilos" id="codigoCarnet" name="codigoCarnet" formControlName="codigoCarnet" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Código carnet</mat-label>
+            <input matInput formControlName="codigoCarnet" type="number" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="sexoEnum" class="form-label estilos">Género</label>
-          <select class="form-select estilos" id="sexoEnum" name="sexoEnum" formControlName="sexoEnum">
-            <option *ngFor="let sexo of keysSexo()">
-              {{ sexo }}
-            </option>
-          </select>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Género</mat-label>
+            <mat-select class="estilos" formControlName="sexoEnum">
+              <mat-option *ngFor="let sexo of keysSexo()" value="sexo">
+                {{ sexo }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="tipoIdentificacionEnum" class="form-label estilos">Tipo identificación</label>
-          <select class="form-select estilos" id="tipoIdentificacionEnum" name="tipoIdentificacionEnum" formControlName="tipoIdentificacionEnum">
-            <option *ngFor="let tipo of keysTipoIdentificacion()">
-              {{ tipo }}
-            </option>
-          </select>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Tipo identificación</mat-label>
+            <mat-select class="estilos" formControlName="tipoIdentificacionEnum">
+              <mat-option *ngFor="let tipo of keysTipoIdentificacion()" value="tipo">
+                {{ tipo }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="numeroIdenticacion" class="form-label estilos">Identificación</label>
-          <input type="number" class="form-control estilos" id="numeroIdenticacion" name="numeroIdenticacion" formControlName="numeroIdenticacion" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Número de identificación</mat-label>
+            <input matInput formControlName="numeroIdenticacion" type="number" />
+          </mat-form-field>
         </div>
+
       </div>
     </div>
 
@@ -67,48 +84,62 @@
       </div>
 
       <div class="row">
+
         <div class="col-md-6 mb-2">
-          <label for="rol" class="form-label estilos">Rol</label>
-          <select class="form-select estilos" id="rol" name="rol" formControlName="rol">
-            <option *ngFor="let rol of keyRol()">
-              {{ rol }}
-            </option>
-          </select>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Rol</mat-label>
+            <mat-select class="estilos" formControlName="rol">
+              <mat-option *ngFor="let rol of keyRol()" value="rol">
+                {{ rol }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="numeroCelular" class="form-label estilos">Número celular</label>
-          <input type="number" class="form-control estilos" id="numeroCelular" name="numeroCelular" formControlName="numeroCelular">
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Número de celular</mat-label>
+            <input matInput formControlName="numeroCelular" type="number" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="programaEnum" class="form-label estilos">Programa</label>
-          <select class="form-select estilos" id="programaEnum" name="programaEnum" formControlName="programaEnum">
-            <option *ngFor="let item of keys()">
-              {{ item }}
-            </option>
-          </select>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Programa</mat-label>
+            <mat-select class="estilos" formControlName="programaEnum">
+              <mat-option *ngFor="let item of keys()" value="item">
+                {{ item }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="correo" class="form-label estilos">Correo</label>
-          <input type="email" class="form-control estilos" id="correo" name="correo" formControlName="correo" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Correo</mat-label>
+            <input matInput formControlName="correo" type="email" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="password" class="form-label estilos">Contraseña</label>
-          <input type="password" class="form-control estilos" id="password" name="password" formControlName="password" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Contraseña</mat-label>
+            <input matInput formControlName="password" type="password" />
+          </mat-form-field>
         </div>
 
         <div class="col-md-6 mb-2">
-          <label for="confirmarPassword" class="form-label estilos">Confirmar contraseña</label>
-          <input type="password" class="form-control estilos" id="confirmarPassword" name="confirmarPassword" formControlName="confirmarPassword" required>
+          <mat-form-field class="w-100">
+            <mat-label class="estilos">Confirmar contraseña</mat-label>
+            <input matInput formControlName="confirmarPassword" type="password" />
+          </mat-form-field>
         </div>
+
       </div>
     </div>
 
     <div class="text-center">
-      <button type="submit" class="btn btn-primary estilos">Enviar</button>
+      <button type="submit" class="btn estilos">Enviar</button>
     </div>
   </form>
 </div>
