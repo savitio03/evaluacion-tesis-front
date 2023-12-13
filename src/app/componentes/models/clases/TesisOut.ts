@@ -1,22 +1,26 @@
 import { Resultado } from './Resultado';
 import { Tesis } from './Tesis';
+import { TesisEstudiante } from './TesisEstudiante';
 
 export class TesisOut extends Resultado {
-  tesis: Tesis;
-  listaTesis: Tesis[];
+  tesisDTO: Tesis;
+  listaTesisDTO: Tesis[];
+  tesisEstudianteDTO: TesisEstudiante[];
   totalTesis: number;
 
   constructor(
     exitoso: boolean,
     mensajeError: string | null,
     mensaje: string | null,
-    tesis: Tesis,
-    listaTesis: Tesis[],
+    tesisDTO: Tesis,
+    listaTesisDTO: Tesis[],
+    listaTesisEstudianteDTO: TesisEstudiante[],
     totalTesis: number
   ) {
     super(exitoso, mensajeError, mensaje);
-    this.tesis = tesis;
-    this.listaTesis = listaTesis;
+    this.tesisDTO = tesisDTO;
+    this.listaTesisDTO = listaTesisDTO;
+    this.tesisEstudianteDTO = listaTesisEstudianteDTO;
     this.totalTesis = totalTesis;
   }
 }

@@ -1,6 +1,6 @@
 import { CompartidosModule } from './../../compartidos/compartidos.module';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EstudiantesComponent } from './estudiantes.component';
 import { EvaluacionesComponent } from './evaluaciones/evaluaciones.component';
 import { SubirTesisComponent } from './subir-tesis/subir-tesis.component';
@@ -15,6 +15,6 @@ import { HttpClientModule } from '@angular/common/http';
     SubirTesisComponent,
   ],
   imports: [CommonModule, CompartidosModule, EstudiantesRoutingModule, HttpClientModule],
-  providers: [TesisService],
+  providers: [TesisService, DatePipe],
 })
 export class EstudiantesModule {}

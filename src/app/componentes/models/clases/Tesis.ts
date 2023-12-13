@@ -16,6 +16,8 @@ export class Tesis {
   evaluador: Usuario;
   estadoTesisEnum: EstadoTesisEnum;
   estudiante2: Usuario;
+  fechaCreacion: string;
+  extension: string;
 
   constructor(
     idTesis: number,
@@ -30,7 +32,9 @@ export class Tesis {
     calificada: boolean,
     evaluador: Usuario,
     estadoTesisEnum: EstadoTesisEnum,
-    estudiante2: Usuario
+    estudiante2: Usuario,
+    fechaCreacion: string,
+    extension: string
   ) {
     this.idTesis = idTesis;
     this.nombre = nombre;
@@ -45,5 +49,7 @@ export class Tesis {
     this.evaluador = evaluador;
     this.estadoTesisEnum = estadoTesisEnum;
     this.estudiante2 = estudiante2;
+    this.fechaCreacion = fechaCreacion;
+    this.extension = extension;
   }
 }

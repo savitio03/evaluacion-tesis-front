@@ -21,3 +21,17 @@ h3 {
   font-family: "Titillium Web", sans-serif;
   margin: 0px;
 }
+
+
+h2 {
+  font-size: 25px;
+  color: rgb(0, 0, 0);
+  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+  margin: 0px;
+}
+.tabla-container{
+  margin:10px;
+}
+

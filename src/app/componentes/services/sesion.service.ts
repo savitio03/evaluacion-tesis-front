@@ -2,10 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, delay, of } from 'rxjs';
 import { Usuario } from '../models/clases/Usuario';
-import { TipoIdentificacionEnum } from '../models/enums/TipoIdentificacionEnum';
-import { SexoEnum } from '../models/enums/SexoEnum';
-import { RolUsuarioEnum } from '../models/enums/RolUsuarioEnum';
+import { EstadoCuentaEnum } from '../models/enums/EstadoCuentaEnum';
 import { ProgramaEnum } from '../models/enums/ProgramaEnum';
+import { RolUsuarioEnum } from '../models/enums/RolUsuarioEnum';
+import { SexoEnum } from '../models/enums/SexoEnum';
+import { TipoIdentificacionEnum } from '../models/enums/TipoIdentificacionEnum';
+import { UsuarioOut } from '../models/clases/UsuarioOut';
 
 @Injectable({
   providedIn: 'root',
@@ -16,9 +18,9 @@ export class SesionService {
   constructor(private http: HttpClient) {}
 
   iniciarSesion(usuario: Usuario): Observable<any> {
-    //return this.http.post<Usuario>(`${this.apiUrl}/consultarUsuario`, usuario);
+    return this.http.post<UsuarioOut>(`${this.apiUrl}/consultarUsuario`, usuario);
     // Simula el servicio de inicio de sesión
-    const usuarioSimulado = {
+    /*const usuarioSimulado = {
       idUsuario: 1,
       nombre: 'Savio',
       segundoNombre: 'SegundoNombre',
@@ -28,16 +30,17 @@ export class SesionService {
       tipoIdentificacionEnum: TipoIdentificacionEnum.CC,
       numeroIdenticacion: '123456789',
       sexoEnum: SexoEnum.MASCULINO,
-      rol: RolUsuarioEnum.ESTUDIANTE,
+      rol: RolUsuarioEnum.ADMINISTRADOR,
       numeroCelular: '123-456-789',
       correo: 'usuario@example.com',
       password: '', // No devuelvas la contraseña en la respuesta
       programaEnum: ProgramaEnum.INGENIEIA_ELECTRICA,
       fechaCreacion: new Date(),
+      estadoCuentaEnum: EstadoCuentaEnum.APROBADO,
     };
 
     // Simula un retardo para emular el tiempo de respuesta del servidor
-    return of(usuarioSimulado).pipe(delay(1000));
+    return of(usuarioSimulado).pipe(delay(1000))*/;
   }
 
   registrarse(usuario: Usuario): Observable<any> {

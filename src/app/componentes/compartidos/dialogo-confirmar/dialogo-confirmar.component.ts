@@ -9,7 +9,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class DialogoConfirmarComponent {
   constructor(
     public dialogRef: MatDialogRef<DialogoConfirmarComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { mensaje: string }
+    @Inject(MAT_DIALOG_DATA) public data: { mensaje: string, mensajeDialogo: string }
   ) {}
 
   cerrarDialogo() {

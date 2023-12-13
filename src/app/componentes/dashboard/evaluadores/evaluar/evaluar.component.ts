@@ -21,8 +21,8 @@ export class EvaluarComponent {
       const usuario: Usuario = JSON.parse(usuarioString);
 
       if (
-        usuario.rol === RolUsuarioEnum.PROFESOR ||
-        usuario.rol === RolUsuarioEnum.ADMINISTRADOR
+        RolUsuarioEnum[usuario.rol].toString()=== RolUsuarioEnum.PROFESOR.toString() ||
+        RolUsuarioEnum[usuario.rol].toString() === RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
       } else {

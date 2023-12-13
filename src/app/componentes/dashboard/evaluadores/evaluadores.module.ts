@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { EvaluadoresComponent } from './evaluadores.component';
 import { EvaluarComponent } from './evaluar/evaluar.component';
 import { CompartidosModule } from '../../compartidos/compartidos.module';
@@ -11,6 +11,6 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [EvaluadoresComponent, EvaluarComponent, EvaluarTesisComponent],
   imports: [CommonModule, CompartidosModule, EvaluadoresComponentRoutingModule, HttpClientModule],
-  providers: [TesisService],
+  providers: [TesisService, DatePipe],
 })
 export class EvaluadoresModule {}

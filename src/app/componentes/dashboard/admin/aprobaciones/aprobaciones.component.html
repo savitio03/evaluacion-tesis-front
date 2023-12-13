@@ -1,0 +1,23 @@
+<!-- Template para cuando no hay tesis -->
+<ng-template #mensajeNoTesis>
+  <div class="mensaje-no-tesis">
+    <h3>No hay aprobaciones pendientes.</h3>
+  </div>
+</ng-template>
+
+<div *ngIf="listaUsuarios && listaUsuarios.length > 0; else mensajeNoTesis" class="tabla-container">
+  <div>
+    <h2 class="text-center">Cuentas pendientes por aprobar.</h2>
+  </div>
+  <br>
+  <app-tabla [config]="{
+      columnas: ['ID', 'Nombre completo', 'Programa', 'Código carnet', 'Estado', 'Rol', 'Contacto', 'Acciones'],
+      dato: ['idUsuario', 'nombreCompleto', 'programaEnum', 'codigoCarnet', 'estadoCuentaEnum', 'rol', 'numeroCelular', ],
+      datos: listaUsuarios,
+      accionesConfig: accionesConfig,
+      clasesConfig: {
+        'Aprobar': '#00b300',
+        'Rechazar': '#d20000',
+      }
+    }"></app-tabla>
+</div>

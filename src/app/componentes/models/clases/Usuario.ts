@@ -2,6 +2,7 @@ import { ProgramaEnum } from '../enums/ProgramaEnum';
 import { RolUsuarioEnum } from '../enums/RolUsuarioEnum';
 import { SexoEnum } from '../enums/SexoEnum';
 import { TipoIdentificacionEnum } from '../enums/TipoIdentificacionEnum';
+import { EstadoCuentaEnum } from './../enums/EstadoCuentaEnum';
 
 export class Usuario {
   idUsuario: number;
@@ -19,6 +20,7 @@ export class Usuario {
   password: string;
   programaEnum: ProgramaEnum;
   fechaCreacion: Date;
+  estadoCuentaEnum : EstadoCuentaEnum;
 
   constructor(
     idUsuario: number,
@@ -35,7 +37,8 @@ export class Usuario {
     correo: string,
     password: string,
     programaEnum: ProgramaEnum,
-    fechaCreacion: Date
+    fechaCreacion: Date,
+    EstadoCuentaEnum : EstadoCuentaEnum
   ) {
     this.idUsuario = idUsuario;
     this.nombre = nombre;
@@ -52,6 +55,7 @@ export class Usuario {
     this.password = password;
     this.programaEnum = programaEnum;
     this.fechaCreacion = fechaCreacion;
+    this.estadoCuentaEnum = EstadoCuentaEnum;
   }
 
 }

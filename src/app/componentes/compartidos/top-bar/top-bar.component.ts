@@ -45,7 +45,7 @@ export class TopBarComponent {
 
   cerrarSesion() {
     const dialogRef = this.dialog.open(DialogoConfirmarComponent, {
-      data: { mensaje: '¿Estás seguro de que quieres cerrar la sesión?' },
+      data: { mensaje : 'Cerrar sesión', mensajeDialogo: '¿Estás seguro de que quieres cerrar la sesión?' },
     });
 
     dialogRef.afterClosed().subscribe((result) => {

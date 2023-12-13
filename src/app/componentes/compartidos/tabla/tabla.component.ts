@@ -14,13 +14,20 @@ export class TablaComponent {
 
   constructor() {}
 
-  editarDato(dato: any) {
-    //do an formulario de edición
+  ejecutarAccion(dato: any, accionKey: string) {
+    const accion = this.config.accionesConfig
+      ? this.config.accionesConfig[accionKey]
+      : undefined;
+
+    if (accion) {
+      accion(dato);
+    }
   }
 
-  verDetalle(dato: any) {
-    // Aquí puedes implementar la lógica para editar el dato, por ejemplo, abrir un formulario de edición.
-    console.log('Editar dato:', dato);
+  getAccionesConfigKeys(): string[] {
+    return this.config.accionesConfig
+      ? Object.keys(this.config.accionesConfig)
+      : [];
   }
 }
 
@@ -28,4 +35,6 @@ export interface TablaConfig {
   columnas: string[];
   dato: string[];
   datos: any[];
+  accionesConfig?: { [key: string]: (dato: any) => void };
+  clasesConfig?: { [key: string]: string };
 }

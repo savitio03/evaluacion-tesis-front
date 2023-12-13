@@ -1,0 +1,30 @@
+.sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav {
+  width: 200px;
+  text-align: center;
+  border-right: 1px solid #000000;
+
+}
+
+mat-nav-list {
+  padding: 10px;
+}
+
+.item-menu {
+  border-radius: 5px;
+  background-color: #d20000;
+  box-shadow: 0px 0px 10px 0px rgba(233, 38, 38, 0.75);
+}
+span {
+  color: white;
+  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
+  font-family: "Titillium Web", sans-serif;
+}
+
+.contenido-seccion{
+  padding: 10px;
+}

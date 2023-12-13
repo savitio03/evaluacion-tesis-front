@@ -1,4 +1,3 @@
-import { EstudiantesModule } from './componentes/dashboard/estudiantes/estudiantes.module';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -20,6 +19,13 @@ const routes: Routes = [
     loadChildren: () =>
       import('./componentes/dashboard/estudiantes/estudiantes.module').then(
         (m) => m.EstudiantesModule
+      ),
+  },
+  {
+    path: 'administrador',
+    loadChildren: () =>
+      import('./componentes/dashboard/admin/admin.module').then(
+        (m) => m.AdminModule
       ),
   },
   { path: '', redirectTo: 'login', pathMatch: 'full' },

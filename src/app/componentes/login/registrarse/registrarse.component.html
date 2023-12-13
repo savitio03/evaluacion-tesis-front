@@ -49,7 +49,7 @@
           <mat-form-field class="w-100">
             <mat-label class="estilos">Género</mat-label>
             <mat-select class="estilos" formControlName="sexoEnum">
-              <mat-option *ngFor="let sexo of keysSexo()" value="sexo">
+              <mat-option *ngFor="let sexo of keysSexo()" [value]="sexo">
                 {{ sexo }}
               </mat-option>
             </mat-select>
@@ -60,7 +60,7 @@
           <mat-form-field class="w-100">
             <mat-label class="estilos">Tipo identificación</mat-label>
             <mat-select class="estilos" formControlName="tipoIdentificacionEnum">
-              <mat-option *ngFor="let tipo of keysTipoIdentificacion()" value="tipo">
+              <mat-option *ngFor="let tipo of keysTipoIdentificacion()" [value]="tipo">
                 {{ tipo }}
               </mat-option>
             </mat-select>
@@ -89,7 +89,7 @@
           <mat-form-field class="w-100">
             <mat-label class="estilos">Rol</mat-label>
             <mat-select class="estilos" formControlName="rol">
-              <mat-option *ngFor="let rol of keyRol()" value="rol">
+              <mat-option *ngFor="let rol of keyRol()" [value]="rol">
                 {{ rol }}
               </mat-option>
             </mat-select>
@@ -107,7 +107,7 @@
           <mat-form-field class="w-100">
             <mat-label class="estilos">Programa</mat-label>
             <mat-select class="estilos" formControlName="programaEnum">
-              <mat-option *ngFor="let item of keys()" value="item">
+              <mat-option *ngFor="let item of keys()" [value]="item">
                 {{ item }}
               </mat-option>
             </mat-select>
@@ -141,5 +141,11 @@
     <div class="text-center">
       <button type="submit" class="btn estilos">Enviar</button>
     </div>
+    <br>
+    <div class="text-center">
+      <a routerLink="iniciar-sesion" class="item-menu" style="color: #d20000; text-decoration: none;">
+        <span>¿Tienes cuenta? Inicia sesión.</span></a>
+    </div>
+
   </form>
 </div>

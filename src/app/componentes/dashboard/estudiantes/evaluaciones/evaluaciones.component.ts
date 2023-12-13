@@ -6,6 +6,8 @@ import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
 import { TesisService } from 'src/app/componentes/services/tesis.service';
+import { TesisEstudiante } from './../../../models/clases/TesisEstudiante';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-evaluaciones',
@@ -13,13 +15,21 @@ import { TesisService } from 'src/app/componentes/services/tesis.service';
   styleUrls: ['./evaluaciones.component.css'],
 })
 export class EvaluacionesComponent {
+  tesisEstudiante: TesisEstudiante[] = [];
   tesis: Tesis[] = [];
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private tesisService: TesisService
+    private tesisService: TesisService,
+    private datePipe: DatePipe
   ) {}
+
+  accionesConfig: { [key: string]: (dato: any) => void } = {
+    Detalle: (dato) => this.Detalle(dato),
+  };
+
+  Detalle(dato: any): void {}
 
   ngOnInit(): void {
     const usuarioString = localStorage.getItem('usuario');
@@ -28,8 +38,10 @@ export class EvaluacionesComponent {
       const usuario: Usuario = JSON.parse(usuarioString);
 
       if (
-        usuario.rol === RolUsuarioEnum.ESTUDIANTE ||
-        usuario.rol === RolUsuarioEnum.ADMINISTRADOR
+        RolUsuarioEnum[usuario.rol].toString() ===
+          RolUsuarioEnum.ESTUDIANTE.toString() ||
+        RolUsuarioEnum[usuario.rol].toString() ===
+          RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
 
@@ -68,14 +80,28 @@ export class EvaluacionesComponent {
     this.tesisService.consultarTesisPorEstudiante(idEstudiante).subscribe(
       (data: any) => {
         if (data && data.exitoso) {
-          this.tesis = data.listaTesisDTO;
+          this.tesisEstudiante = data.tesisEstudianteDTO;
+          this.convertirTesisEstudianteATesis(this.tesisEstudiante);
+          console.log(this.tesis);
         } else {
-          console.error('Error al obtener las tesis:', data.mensaje);
+          console.log(data.mensaje);
         }
       },
       (error) => {
         console.error('Error al obtener las tesis:', error);
       }
     );
+  }
+
+  convertirTesisEstudianteATesis(tesisEstudiante: TesisEstudiante[]) {
+    for (let tesis of tesisEstudiante) {
+      let fechaFormateada = this.datePipe.transform(
+        tesis.usuarioDTOEstudiante.fechaCreacion,
+        'dd-MM-yyyy'
+      );
+
+      tesis.tesisDTOEstudiante.fechaCreacion = '' + fechaFormateada;
+      this.tesis.push(tesis.tesisDTOEstudiante);
+    }
   }
 }

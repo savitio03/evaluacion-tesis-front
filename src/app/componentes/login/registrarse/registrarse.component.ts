@@ -1,3 +1,4 @@
+import { SesionService } from './../../services/sesion.service';
 import { RolUsuarioEnum } from './../../models/enums/RolUsuarioEnum';
 import { TipoIdentificacionEnum } from './../../models/enums/TipoIdentificacionEnum';
 import { Component } from '@angular/core';
@@ -24,7 +25,8 @@ export class RegistrarseComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private sesionService: SesionService
   ) {
     this.formulario = this.fb.group({
       nombre: ['', Validators.required],
@@ -47,7 +49,6 @@ export class RegistrarseComponent {
   onSubmit() {
     // Aquí puedes manejar la lógica de envío del formulario
     console.log(this.formulario.value);
-
     if (this.formulario.valid) {
       if (
         this.formulario.get('password')?.value !=
@@ -55,12 +56,28 @@ export class RegistrarseComponent {
       ) {
         this.dialogo('Error', 'Las contraseñas no coinciden.');
       } else {
-        this.dialogo('Registro exitoso', 'Se ha registrado correctamente.');
-        this.router.navigate(['/inicio-sesion']);
+        console.log(this.formulario.value.tipoIdentificacionEnum.value);
+        console.log(this.formulario.value.rol.value);
+        console.log(this.formulario.value.sexoEnum.value);
+        console.log(this.formulario.value.programaEnum.value);
+
+        this.sesionService.registrarse(this.formulario.value).subscribe(
+          (response) => this.handleSuccess(response),
+          (error) => this.handleError(error)
+        );
       }
     }
 
     // Por ejemplo, podrías enviar los datos al servidor
+  }
+
+  handleSuccess(response: any): void {
+    this.dialogo('Registro exitoso', 'Se ha registrado correctamente.');
+    this.router.navigate(['/inicio-sesion']);
+  }
+
+  handleError(error: any): void {
+    this.dialogo('Error', 'No se ha podido registrar.');
   }
 
   keys(): Array<string> {

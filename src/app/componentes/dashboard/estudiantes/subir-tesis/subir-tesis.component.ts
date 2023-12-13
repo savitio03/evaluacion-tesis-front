@@ -38,8 +38,10 @@ export class SubirTesisComponent {
       const usuario: Usuario = JSON.parse(usuarioString);
 
       if (
-        usuario.rol === RolUsuarioEnum.ESTUDIANTE ||
-        usuario.rol === RolUsuarioEnum.ADMINISTRADOR
+        RolUsuarioEnum[usuario.rol].toString() ===
+        RolUsuarioEnum.ESTUDIANTE.toString() ||
+      RolUsuarioEnum[usuario.rol].toString() ===
+        RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
       } else {

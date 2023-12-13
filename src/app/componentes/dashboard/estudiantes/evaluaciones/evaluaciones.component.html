@@ -1,15 +1,22 @@
 <!-- Template para cuando no hay tesis -->
 <ng-template #mensajeNoTesis>
   <div class="mensaje-no-tesis">
-    <h3>No ha subido ninguna tesis.</h3>
+    <h3>No ha subido ninguna tesis</h3>
   </div>
 </ng-template>
 
-<!-- Mostrar el mensaje o la tabla según si hay tesis o no -->
 <div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
+  <div>
+    <h2 class="text-center">Tus tesis</h2>
+  </div>
+  <br>
   <app-tabla [config]="{
-    columnas: ['ID', 'Nombre tesis', 'Estado', 'Programa', 'Evaluador', 'Acciones'],
-    dato:['idTesis', 'nombre', 'estadoTesisEnum', 'programaEnum', 'evaluador.nombreCompleto'],
-    datos: tesis
-  }"></app-tabla>
+      columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado',  'Fecha creación', 'Acciones'],
+      dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
+      datos: tesis,
+      accionesConfig: accionesConfig,
+      clasesConfig: {
+        'Detalle': '#D20000',
+      }
+    }"></app-tabla>
 </div>
