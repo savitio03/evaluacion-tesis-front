@@ -1,5 +1,6 @@
 <app-top-bar></app-top-bar>
-<mat-sidenav-container class="sidenav-container">
+<mat-sidenav-container>
+  <app-top-bar></app-top-bar>
   <mat-sidenav #sidenav mode="side" opened>
     <mat-nav-list >
       <a mat-list-item routerLink="subir-tesis" class = "item-menu" style="color: white; text-decoration: none;"><span>Subir tesis</span></a>
@@ -8,7 +9,7 @@
       <a mat-list-item routerLink="evaluaciones" class = "item-menu" style="color: white; text-decoration: none;"><span>Evaluaciones</span></a>
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content class="contenido-seccion">
+  <mat-sidenav-content style="overflow: hidden;">
     <router-outlet> </router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

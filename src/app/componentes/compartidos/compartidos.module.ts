@@ -18,7 +18,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatTableModule } from '@angular/material/table';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatOptionModule } from '@angular/material/core';
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule } from '@angular/material/select';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,7 @@ import {MatSelectModule} from '@angular/material/select';
     TablaComponent,
     TopComponent,
     DialogoComponent,
-    DialogoConfirmarComponent
+    DialogoConfirmarComponent,
   ],
   imports: [
     RouterModule,
@@ -43,7 +46,10 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
   ],
   exports: [
     TopBarComponent,
@@ -62,7 +68,9 @@ import {MatSelectModule} from '@angular/material/select';
     MatTableModule,
     ReactiveFormsModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatSortModule,
+    MatProgressSpinnerModule,
   ],
 })
 export class CompartidosModule {}

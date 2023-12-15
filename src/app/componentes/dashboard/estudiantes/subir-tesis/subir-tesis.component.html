@@ -1,37 +1,40 @@
 <div class="container">
-  <form [formGroup]="formularioTesis" (ngSubmit)="onSubmit()">
-    <div class="mb-3">
-      <label for="nombre" class="form-label estilos">Nombre de la tesis</label>
-      <input type="text" class="form-control" id="nombre" name="nombre" formControlName="nombre" required>
+
+  <div class="text-center">
+    <h3 class="titulos">Información de la tesis</h3>
+  </div>
+
+
+  <form [formGroup]="formularioTesis" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <div class="mb-1">
+      <mat-form-field class="w-100">
+        <mat-label class="estilos">Nombre de la tesis</mat-label>
+        <input matInput formControlName="nombre" />
+      </mat-form-field>
     </div>
 
-    <div class="mb-3">
-      <label for="programaEnum" class="form-label estilos">Programa</label>
-      <select class="form-select estilos" id="programaEnum" name="programaEnum" formControlName="programaEnum">
-        <option *ngFor="let item of keys()">
-          {{ item }}
-        </option>
-      </select>
+    <div class="mb-1">
+      <mat-form-field class="w-100">
+        <mat-label class="estilos">Descripción</mat-label>
+        <textarea matInput placeholder="Agregue una breve descripción sobre su tesis" formControlName="descripcion" ></textarea>
+      </mat-form-field>
+
     </div>
 
-    <div class="mb-3">
-      <label for="descripcion" class="form-label estilos">Descripción</label>
-      <textarea class="form-control" id="descripcion" name="descripcion" formControlName="descripcion"></textarea>
+    <div class="mb-1">
+      <mat-form-field class="w-100">
+        <mat-label class="estilos">Código carnet segundo estudiante (opcional)</mat-label>
+        <input matInput formControlName="carnet2" type="number" />
+      </mat-form-field>
     </div>
 
-    <div class="mb-3">
-      <label for="estudiante2" class="form-label estilos">Código carnet segundo estudiante (opcional)</label>
-      <input type="text" class="form-control" id="estudiante2" name="estudiante2" formControlName="estudiante2">
+    <div class="mb-1">
+      <input type="file" class="form-control estilos" id="archivo" name="archivo" formControlName="archivo" (change)="onFileSelected($event)">
     </div>
 
-    <div class="mb-3">
-      <label for="archivo" class="form-label estilos">Subir archivo</label>
-      <input type="file" class="form-control estilos" id="archivo" name="archivo" formControlName="archivo">
-    </div>
-
-    <div class="text-center">
-
-      <button type="submit" class="btn btn-primary estilos">Enviar</button>
+    <div class="text-center mt-4">
+      <button mat-raised-button class="full-width estilos"
+      style="background-color: #d20000;color: white;" >Enviar</button>
     </div>
   </form>
 </div>

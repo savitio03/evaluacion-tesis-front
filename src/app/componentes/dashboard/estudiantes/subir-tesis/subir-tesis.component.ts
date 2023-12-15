@@ -2,10 +2,13 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DialogoConfirmarComponent } from 'src/app/componentes/compartidos/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
+import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
 import { ProgramaEnum } from 'src/app/componentes/models/enums/ProgramaEnum';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
+import { TesisService } from 'src/app/componentes/services/tesis.service';
 
 @Component({
   selector: 'app-subir-tesis',
@@ -13,20 +16,26 @@ import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum'
   styleUrls: ['./subir-tesis.component.css'],
 })
 export class SubirTesisComponent {
+
   formularioTesis: FormGroup;
   programasEnum = ProgramaEnum;
+  tesisDTO!: Tesis;
+  usuario!: Usuario;
+  usuario2!: Usuario;
+  archivoSeleccionado!: File;
+
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private tesisService: TesisService
   ) {
     this.formularioTesis = this.fb.group({
       nombre: ['', Validators.required],
-      programaEnum: ['', Validators.required],
-      descripcion: [''],
-      estudiante2: [''],
-      archivo: [''],
+      descripcion: ['', Validators.required],
+      carnet2: [''],
+      archivo: ['', Validators.required],
     });
   }
 
@@ -39,11 +48,12 @@ export class SubirTesisComponent {
 
       if (
         RolUsuarioEnum[usuario.rol].toString() ===
-        RolUsuarioEnum.ESTUDIANTE.toString() ||
-      RolUsuarioEnum[usuario.rol].toString() ===
-        RolUsuarioEnum.ADMINISTRADOR.toString()
+          RolUsuarioEnum.ESTUDIANTE.toString() ||
+        RolUsuarioEnum[usuario.rol].toString() ===
+          RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
+        this.usuario = usuario;
       } else {
         console.log('El usuario no tiene permisos para acceder');
         this.noLogueado('No tiene permisos para acceder a esta funcionalidad.');
@@ -68,14 +78,86 @@ export class SubirTesisComponent {
     });
   }
 
+  onFileSelected(event: any): void {
+    this.archivoSeleccionado = event.target.files[0];
+  }
+
   onSubmit() {
-    // Aquí puedes manejar la lógica de envío del formulario
-    console.log(this.formularioTesis.value);
-    // Por ejemplo, podrías enviar los datos al servidor
+    if (this.formularioTesis.valid) {
+      const dialogRef = this.dialog.open(DialogoConfirmarComponent, {
+        data: {
+          mensaje: 'Subir tesis',
+          mensajeDialogo: '¿Estás seguro que desea subir la tesis?',
+        },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.guardarTesis();
+        }
+      });
+    }
   }
 
   keys(): Array<string> {
     var keys = Object.keys(this.programasEnum);
     return keys.slice(keys.length / 2);
+  }
+
+  guardarTesis() {
+    if (this.formularioTesis.invalid) {
+      return;
+    }
+
+    // Obtener datos del formulario
+    const tesisDTO = new Tesis();
+    tesisDTO.nombre = this.formularioTesis.get('nombre')?.value;
+    tesisDTO.descripcion = this.formularioTesis.get('descripcion')?.value;
+    tesisDTO.programaEnum = this.usuario.programaEnum;
+    tesisDTO.estudiante = this.usuario;
+
+    if (this.formularioTesis.get('carnet2')?.value) {
+      this.usuario2.codigoCarnet = this.formularioTesis.get('carnet2')?.value;
+      tesisDTO.estudiante2 = this.usuario2;
+    }
+
+    // Crear objeto FormData y agregar valores
+    const formData = new FormData();
+    formData.append(
+      'tesisDTO',
+      new Blob([JSON.stringify(tesisDTO)], { type: 'application/json' })
+    );
+    formData.append('archivo', this.archivoSeleccionado);
+
+    console.log('Datos y archivo a enviar:', this.archivoSeleccionado);
+
+    // Enviar solicitud al servicio
+    this.tesisService.guardarTesis(formData).subscribe(
+      (data) => this.handleSuccessResponse(data),
+      (err) => this.handleErrorResponse(err)
+    );
+  }
+
+  private handleSuccessResponse(data: any) {
+    console.log('Respuesta del servidor:', data);
+
+    const dialogRef = this.dialog.open(DialogoComponent, {
+      data: {
+        mensaje: data.exitoso === 'false' ? 'Error' : 'Éxito',
+        mensajeDialogo: data.mensaje,
+      },
+    });
+
+    this.formularioTesis.reset();
+  }
+
+  private handleErrorResponse(err: any) {
+    console.log('Error al guardar la tesis:', err);
+
+    this.dialog.open(DialogoComponent, {
+      data: {
+        mensaje: 'Error',
+        mensajeDialogo: 'Error al guardar la tesis.',
+      },
+    });
   }
 }

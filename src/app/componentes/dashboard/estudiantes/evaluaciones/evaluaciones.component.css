@@ -35,3 +35,14 @@ h2 {
   margin:10px;
 }
 
+.spinner-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* O ajusta según sea necesario */
+}
+
+.mat-progress-spinner {
+  width: 50px;
+  height: 50px;
+}

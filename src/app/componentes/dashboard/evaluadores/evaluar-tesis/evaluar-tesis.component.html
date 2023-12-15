@@ -1,23 +1,30 @@
-<!-- Template para cuando no hay tesis -->
-<ng-template #mensajeNoTesis>
-  <div class="mensaje-no-tesis">
-    <h3>No hay tesis por evaluar</h3>
-  </div>
-</ng-template>
+<!-- EvaluacionesComponent.html -->
 
-<div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
-  <div>
-    <h2 class="text-center">Tesis por evaluar</h2>
-  </div>
-  <br>
-  <app-tabla [config]="{
-      columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado',  'Fecha creación', 'Acciones'],
-      dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
-      datos: tesis,
-      accionesConfig: accionesConfig,
-      clasesConfig: {
-        'Descargar': '#D20000',
-        'Evaluar': '#00A8D2'
-      }
-    }"></app-tabla>
+<div class="spinner-container" *ngIf="cargando; else contenidoCargado">
+  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
 </div>
+
+<ng-template #contenidoCargado>
+  <div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
+    <div>
+      <h2 class="text-center">Tus tesis</h2>
+    </div>
+    <br>
+    <app-tabla [config]="{
+        columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado', 'Fecha creación', 'Acciones'],
+        dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
+        datos: tesis,
+        accionesConfig: accionesConfig,
+        clasesConfig: {
+          'Descargar': '#D20000',
+          'Evaluar': '#00A8D2'
+        }
+      }"></app-tabla>
+  </div>
+
+  <ng-template #mensajeNoTesis>
+    <div class="mensaje-no-tesis">
+      <h3>No hay tesis por evaluar</h3>
+    </div>
+  </ng-template>
+</ng-template>

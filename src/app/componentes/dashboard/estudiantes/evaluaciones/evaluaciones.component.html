@@ -1,22 +1,28 @@
-<!-- Template para cuando no hay tesis -->
+<div class="spinner-container" *ngIf="cargando; else contenidoCargado">
+  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+
+<ng-template #contenidoCargado>
+  <!-- Contenido cuando la carga ha finalizado -->
+  <div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
+    <div>
+      <h2 class="text-center">Tus tesis</h2>
+    </div>
+    <br>
+    <app-tabla [config]="{
+        columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado', 'Fecha creación'],
+        dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
+        datos: tesis,
+        accionesConfig: accionesConfig,
+        clasesConfig: {
+          'Detalle': '#D20000',
+        }
+      }"></app-tabla>
+  </div>
+</ng-template>
+
 <ng-template #mensajeNoTesis>
   <div class="mensaje-no-tesis">
     <h3>No ha subido ninguna tesis</h3>
   </div>
 </ng-template>
-
-<div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
-  <div>
-    <h2 class="text-center">Tus tesis</h2>
-  </div>
-  <br>
-  <app-tabla [config]="{
-      columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado',  'Fecha creación', 'Acciones'],
-      dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
-      datos: tesis,
-      accionesConfig: accionesConfig,
-      clasesConfig: {
-        'Detalle': '#D20000',
-      }
-    }"></app-tabla>
-</div>

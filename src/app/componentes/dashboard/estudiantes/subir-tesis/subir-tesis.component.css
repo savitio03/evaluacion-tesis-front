@@ -13,7 +13,7 @@ button {
   background-color: #d20000;
   color: white;
   border-color: #d20000;
-  width: 100px;
+  width: 150px;
 }
 
 button:hover {
@@ -30,5 +30,12 @@ button:active {
 
 input, select, textarea{
   border-radius: 5px;
-  border-color: #000000;
+  border-color: #2b7b9b;
+}
+
+.titulos {
+  font-size: 25px;
+  font-family: "Kanit", sans-serif;
+  font-family: "Orbitron", sans-serif;
+  font-family: "Titillium Web", sans-serif;
 }

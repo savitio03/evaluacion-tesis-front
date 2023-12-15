@@ -63,7 +63,12 @@ export class InicioSesionComponent {
    * @param response
    */
   private handleSuccess(response: any): void {
-    console.log('Respuesta del servidor:', response);
+
+
+    if(response.exitoso == false){
+      this.abrirDialogoErrorCredenciales();
+      return;
+    }
 
     // Guardar datos en localStorage
     localStorage.setItem('usuario', JSON.stringify(response.usuarioDTO));

@@ -1,29 +1,43 @@
-<table mat-table [dataSource]="config.datos" class="mat-elevation-z8" class="table table-hover"
-  style="border-radius:  5px;">
-  <ng-container *ngFor="let columna of config.columnas; let i = index" [matColumnDef]="columna">
-    <th mat-header-cell *matHeaderCellDef class="text-center">{{ columna }}</th>
-    <td class="text-center align-middle" mat-cell *matCellDef="let dato">
+<div class="tabla">
 
-      <ng-container *ngIf="columna !== 'Acciones'; else accionesColumna">
-        {{ dato[config.dato[i]] }}
+
+  <mat-form-field class="w-100">
+    <mat-label>Filtrar</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Estado" #input>
+  </mat-form-field>
+
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" matSort (matSortChange)="sortData($event)">
+
+      <!-- Columnas dinámicas con ordenamiento -->
+      <ng-container *ngFor="let columna of config.columnas; let i = index" [matColumnDef]="columna">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header class="text-center"> {{ columna }} </th>
+        <td mat-cell *matCellDef="let row" class="text-center align-middle"> {{row[config.dato[i]]}} </td>
       </ng-container>
-      <ng-template #accionesColumna>
-        <div class="button-row">
-          <div *ngFor="let accionKey of getAccionesConfigKeys()">
+
+      <!-- Acciones dinámicas -->
+      <ng-container matColumnDef="acciones">
+        <th mat-header-cell *matHeaderCellDef class="text-center"> Acciones </th>
+        <td mat-cell *matCellDef="let row" class="text-center align-middle">
+          <ng-container *ngFor="let accionKey of getAccionesConfigKeys()">
             <button mat-raised-button
               [style.background-color]="config.clasesConfig ? config.clasesConfig[accionKey] : ''"
-              [style.color]="'#ffffff'" class="w-75 my-1" (click)="ejecutarAccion(dato, accionKey)">
+              [style.color]="'#ffffff'" class="w-75 my-1" (click)="ejecutarAccion(row, accionKey)">
               {{ accionKey }}
             </button>
-          </div>
-        </div>
-      </ng-template>
-    </td>
-  </ng-container>
+          </ng-container>
+        </td>
+      </ng-container>
 
-  <!-- Definición de las filas -->
-  <tr mat-header-row *matHeaderRowDef="config.columnas"></tr>
-  <tr mat-row *matRowDef="let row; columns: config.columnas;"></tr>
-</table>
+      <tr mat-header-row *matHeaderRowDef="config.columnas.concat('acciones')"></tr>
+      <tr mat-row *matRowDef="let row; columns: config.columnas.concat('acciones')"></tr>
 
-<mat-divider></mat-divider>
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row mt-2" *matNoDataRow>
+        <td class="mat-cell text-center" [attr.colspan]="config.columnas.length + 1">No se encontraron datos</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+  </div>
+</div>

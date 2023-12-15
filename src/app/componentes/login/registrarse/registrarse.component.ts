@@ -72,8 +72,12 @@ export class RegistrarseComponent {
   }
 
   handleSuccess(response: any): void {
-    this.dialogo('Registro exitoso', 'Se ha registrado correctamente.');
-    this.router.navigate(['/inicio-sesion']);
+    if (response.exitoso == false) {
+      this.dialogo('Error', response.mensaje);
+    } else {
+      this.dialogo('Registro exitoso', 'Se ha registrado correctamente.');
+      this.router.navigate(['/inicio-sesion']);
+    }
   }
 
   handleError(error: any): void {

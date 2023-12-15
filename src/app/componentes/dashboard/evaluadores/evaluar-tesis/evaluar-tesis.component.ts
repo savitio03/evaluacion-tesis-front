@@ -1,5 +1,5 @@
 import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
@@ -16,9 +16,10 @@ import { saveAs } from 'file-saver';
   templateUrl: './evaluar-tesis.component.html',
   styleUrls: ['./evaluar-tesis.component.css'],
 })
-export class EvaluarTesisComponent {
+export class EvaluarTesisComponent implements OnInit {
   tesisEstudiante: TesisEstudiante[] = [];
   tesis: Tesis[] = [];
+  cargando: boolean = true;
 
   constructor(
     public dialog: MatDialog,
@@ -41,11 +42,8 @@ export class EvaluarTesisComponent {
     }
     const byteArray = new Uint8Array(byteNumbers);
 
-    // Convertir a Blob
-    const blob = new Blob([byteArray], { type: 'application/pdf' }); // Cambia el tipo MIME según el tipo de documento
-
-    // Descargar el Blob
-    const nombreArchivo = 'documentoTesis.'+ dato.extension;
+    const blob = new Blob([byteArray], { type: 'application/pdf' });
+    const nombreArchivo = `documentoTesis.${dato.extension}`;
     saveAs(blob, nombreArchivo);
   }
 
@@ -53,20 +51,19 @@ export class EvaluarTesisComponent {
     return '.pdf';
   }
 
-  evaluar(dato: any): void {}
+  evaluar(dato: any): void {
+    // Lógica para la evaluación
+  }
 
   ngOnInit(): void {
-    // Obtener datos del localStorage
     const usuarioString = localStorage.getItem('usuario');
 
     if (usuarioString) {
       const usuario: Usuario = JSON.parse(usuarioString);
 
       if (
-        RolUsuarioEnum[usuario.rol].toString() ===
-          RolUsuarioEnum.PROFESOR.toString() ||
-        RolUsuarioEnum[usuario.rol].toString() ===
-          RolUsuarioEnum.ADMINISTRADOR.toString()
+        RolUsuarioEnum[usuario.rol].toString() === RolUsuarioEnum.PROFESOR.toString() ||
+        RolUsuarioEnum[usuario.rol].toString() === RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
         this.obtenerTesis(usuario.programaEnum);
@@ -83,9 +80,6 @@ export class EvaluarTesisComponent {
     }
   }
 
-  /**
-   * Para cuando el servidor responde con error de credenciales
-   */
   noLogueado(mensajeDialogo: string) {
     this.dialog.open(DialogoComponent, {
       data: {
@@ -105,9 +99,12 @@ export class EvaluarTesisComponent {
         } else {
           console.log(data.mensaje);
         }
+
+        this.cargando = false;
       },
       (error) => {
         console.error('Error al obtener las tesis:', error);
+        this.cargando = false;
       }
     );
   }
