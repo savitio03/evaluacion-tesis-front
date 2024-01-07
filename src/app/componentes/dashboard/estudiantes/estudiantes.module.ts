@@ -7,12 +7,14 @@ import { SubirTesisComponent } from './subir-tesis/subir-tesis.component';
 import { EstudiantesRoutingModule } from './estudiantes-routing.module';
 import { TesisService } from '../../services/tesis.service';
 import { HttpClientModule } from '@angular/common/http';
+import { DetallesComponent } from './detalles/detalles.component';
 
 @NgModule({
   declarations: [
     EstudiantesComponent,
     EvaluacionesComponent,
     SubirTesisComponent,
+    DetallesComponent,
   ],
   imports: [CommonModule, CompartidosModule, EstudiantesRoutingModule, HttpClientModule],
   providers: [TesisService, DatePipe],

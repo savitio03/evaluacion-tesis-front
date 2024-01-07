@@ -10,7 +10,7 @@ const routes: Routes = [
     component: EvaluadoresComponent,
     children: [
       { path: 'evaluar-tesis', component: EvaluarTesisComponent },
-      { path: 'evaluar', component: EvaluarComponent },
+      { path: 'evaluar/:id', component: EvaluarComponent },
       { path: '', redirectTo: 'evaluar-tesis', pathMatch: 'full' },
       { path: '**', redirectTo: 'evaluar-tesis', pathMatch: 'full' },
     ],

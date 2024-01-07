@@ -22,6 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -50,6 +52,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatPaginatorModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    MatCardModule,
+    MatExpansionModule,
   ],
   exports: [
     TopBarComponent,
@@ -71,6 +75,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatSortModule,
     MatProgressSpinnerModule,
+    MatCardModule,
+    MatExpansionModule,
   ],
 })
 export class CompartidosModule {}

@@ -104,21 +104,3 @@ button {
 .calificada {
   margin-top: 10px;
 }
-
-.calificacion-container {
-  display: flex;
-  align-items: center;
-}
-
-.calificacion-container h3 {
-  margin-right: 12px;
-}
-
-.observaciones-container {
-  width: 100%;
-}
-
-.full-width {
-  width: 100%;
-}
-

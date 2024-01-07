@@ -48,6 +48,7 @@ export class InicioSesionComponent {
         numeroCelular: '',
         programaEnum: 0,
         fechaCreacion: new Date(),
+        nombreCompleto: '',
         estadoCuentaEnum: 0,
       };
 

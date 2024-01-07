@@ -1,22 +1,21 @@
 <!-- EvaluacionesComponent.html -->
 
 <div class="spinner-container" *ngIf="cargando; else contenidoCargado">
-  <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+  <mat-progress-spinner mode="indeterminate" diameter="50" color="warn"></mat-progress-spinner>
 </div>
 
 <ng-template #contenidoCargado>
-  <div *ngIf="tesis && tesis.length > 0; else mensajeNoTesis" class="tabla-container">
+  <div *ngIf="tesisPrograma && tesisPrograma.length > 0; else mensajeNoTesis" class="tabla-container">
     <div>
-      <h2 class="text-center">Tus tesis</h2>
+      <h2 class="text-center">Tesis a evaluar</h2>
     </div>
     <br>
     <app-tabla [config]="{
-        columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado', 'Fecha creación', 'Acciones'],
+        columnas: ['ID', 'Nombre tesis', 'Programa', 'Estado', 'Fecha creación'],
         dato: ['idTesis', 'nombre', 'programaEnum', 'calificada', 'fechaCreacion' ],
-        datos: tesis,
+        datos: tesisPrograma,
         accionesConfig: accionesConfig,
         clasesConfig: {
-          'Descargar': '#D20000',
           'Evaluar': '#00A8D2'
         }
       }"></app-tabla>

@@ -6,9 +6,13 @@ import { DialogoConfirmarComponent } from 'src/app/componentes/compartidos/dialo
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
+import { EstadoCuentaEnum } from 'src/app/componentes/models/enums/EstadoCuentaEnum';
 import { ProgramaEnum } from 'src/app/componentes/models/enums/ProgramaEnum';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
+import { SexoEnum } from 'src/app/componentes/models/enums/SexoEnum';
 import { TesisService } from 'src/app/componentes/services/tesis.service';
+import { TipoIdentificacionEnum } from './../../../models/enums/TipoIdentificacionEnum';
+import { ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-subir-tesis',
@@ -16,20 +20,38 @@ import { TesisService } from 'src/app/componentes/services/tesis.service';
   styleUrls: ['./subir-tesis.component.css'],
 })
 export class SubirTesisComponent {
-
   formularioTesis: FormGroup;
   programasEnum = ProgramaEnum;
   tesisDTO!: Tesis;
   usuario!: Usuario;
-  usuario2!: Usuario;
-  archivoSeleccionado!: File;
+  usuario2: Usuario = new Usuario(
+    1,
+    '',
+    '',
+    '',
+    '',
+    '',
+    TipoIdentificacionEnum.CC,
+    '',
+    SexoEnum.MASCULINO,
+    RolUsuarioEnum.ESTUDIANTE,
 
+    '',
+    '',
+    '',
+    ProgramaEnum.INGENIERIA_CIVIL,
+    new Date(),
+    '',
+    EstadoCuentaEnum.APROBADO
+  );
+  archivoSeleccionado!: File;
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private fb: FormBuilder,
-    private tesisService: TesisService
+    private tesisService: TesisService,
+    private cdr: ChangeDetectorRef
   ) {
     this.formularioTesis = this.fb.group({
       nombre: ['', Validators.required],
@@ -140,14 +162,28 @@ export class SubirTesisComponent {
   private handleSuccessResponse(data: any) {
     console.log('Respuesta del servidor:', data);
 
-    const dialogRef = this.dialog.open(DialogoComponent, {
-      data: {
-        mensaje: data.exitoso === 'false' ? 'Error' : 'Éxito',
-        mensajeDialogo: data.mensaje,
-      },
-    });
+    if (data.exitoso === false) {
+      const dialogRef = this.dialog.open(DialogoComponent, {
+        data: {
+          mensaje: 'Error',
+          mensajeDialogo: data.mensaje,
+        },
+      });
+    } else {
+      const dialogRef = this.dialog.open(DialogoComponent, {
+        data: {
+          mensaje: 'Tesis subida',
+          mensajeDialogo: 'La tesis se subió correctamente.',
+        },
+      });
 
-    this.formularioTesis.reset();
+      this.formularioTesis.reset();
+      this.formularioTesis.markAsPristine();
+      this.formularioTesis.markAsUntouched();
+
+      // Forzar actualización de la vista
+      this.cdr.detectChanges();
+    }
   }
 
   private handleErrorResponse(err: any) {

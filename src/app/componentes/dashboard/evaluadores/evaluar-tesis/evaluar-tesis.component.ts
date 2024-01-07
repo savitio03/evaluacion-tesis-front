@@ -17,7 +17,7 @@ import { saveAs } from 'file-saver';
   styleUrls: ['./evaluar-tesis.component.css'],
 })
 export class EvaluarTesisComponent implements OnInit {
-  tesisEstudiante: TesisEstudiante[] = [];
+  tesisPrograma: Tesis[] = [];
   tesis: Tesis[] = [];
   cargando: boolean = true;
 
@@ -29,7 +29,6 @@ export class EvaluarTesisComponent implements OnInit {
   ) {}
 
   accionesConfig: { [key: string]: (dato: any) => void } = {
-    Descargar: (dato) => this.descargar(dato),
     Evaluar: (dato) => this.evaluar(dato),
   };
 
@@ -52,7 +51,9 @@ export class EvaluarTesisComponent implements OnInit {
   }
 
   evaluar(dato: any): void {
-    // Lógica para la evaluación
+    console.log(dato);
+    this.router.navigate(['evaluadores/evaluar', dato.idTesis]);
+
   }
 
   ngOnInit(): void {
@@ -62,8 +63,10 @@ export class EvaluarTesisComponent implements OnInit {
       const usuario: Usuario = JSON.parse(usuarioString);
 
       if (
-        RolUsuarioEnum[usuario.rol].toString() === RolUsuarioEnum.PROFESOR.toString() ||
-        RolUsuarioEnum[usuario.rol].toString() === RolUsuarioEnum.ADMINISTRADOR.toString()
+        RolUsuarioEnum[usuario.rol].toString() ===
+          RolUsuarioEnum.PROFESOR.toString() ||
+        RolUsuarioEnum[usuario.rol].toString() ===
+          RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
         console.log('El usuario tiene permisos para acceder');
         this.obtenerTesis(usuario.programaEnum);
@@ -93,9 +96,9 @@ export class EvaluarTesisComponent implements OnInit {
     this.tesisService.consultarTesisPorPrograma(programaEnum).subscribe(
       (data: any) => {
         if (data && data.exitoso) {
-          this.tesisEstudiante = data.tesisEstudianteDTO;
-          this.convertirTesisEstudianteATesis(this.tesisEstudiante);
-          console.log(this.tesisEstudiante);
+          this.tesisPrograma = data.listaTesisDTO;
+          this.convertirTesisEstudianteATesis(this.tesisPrograma);
+          console.log(this.tesisPrograma);
         } else {
           console.log(data.mensaje);
         }
@@ -109,15 +112,14 @@ export class EvaluarTesisComponent implements OnInit {
     );
   }
 
-  convertirTesisEstudianteATesis(tesisEstudiante: TesisEstudiante[]) {
-    for (let tesis of tesisEstudiante) {
+  convertirTesisEstudianteATesis(tesisPrograma: Tesis[]) {
+    for (let tesis of tesisPrograma) {
       let fechaFormateada = this.datePipe.transform(
-        tesis.tesisDTOEstudiante.fechaCreacion,
+        tesis.fechaCreacion,
         'dd-MM-yyyy'
       );
 
-      tesis.tesisDTOEstudiante.fechaCreacion = '' + fechaFormateada;
-      this.tesis.push(tesis.tesisDTOEstudiante);
+      tesis.fechaCreacion = '' + fechaFormateada;
     }
   }
 }

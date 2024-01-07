@@ -56,7 +56,8 @@ export class EvaluacionesComponent implements OnInit {
   }
 
   Detalle(dato: any): void {
-    // Lógica para el detalle
+    console.log(dato);
+    this.router.navigate(['/estudiantes/detalle-tesis', dato.idTesis]);
   }
 
   dialogo(mensaje: string, mensajeDialogo: string) {

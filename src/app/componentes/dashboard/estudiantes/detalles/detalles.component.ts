@@ -1,9 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { saveAs } from 'file-saver';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { TesisEstudiante } from 'src/app/componentes/models/clases/TesisEstudiante';
@@ -11,19 +9,18 @@ import { Usuario } from 'src/app/componentes/models/clases/Usuario';
 import { CalificadaEnum } from 'src/app/componentes/models/enums/CalificadaEnum';
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
 import { TesisService } from 'src/app/componentes/services/tesis.service';
+import { saveAs } from 'file-saver';
 
 @Component({
-  selector: 'app-evaluar',
-  templateUrl: './evaluar.component.html',
-  styleUrls: ['./evaluar.component.css'],
+  selector: 'app-detalles',
+  templateUrl: './detalles.component.html',
+  styleUrls: ['./detalles.component.css'],
 })
-export class EvaluarComponent {
+export class DetallesComponent {
   id: number | null = null;
   tesis!: Tesis;
   tesisEstudiantes: TesisEstudiante[] = [];
   CalificadaEnum: CalificadaEnum = CalificadaEnum.SIN_CALIFICAR;
-
-  tesisForm!: FormGroup;
 
   panelOpenState = false;
   constructor(
@@ -31,12 +28,8 @@ export class EvaluarComponent {
     private router: Router,
     private tesisService: TesisService,
     private datePipe: DatePipe,
-    private route: ActivatedRoute,
-    private fb: FormBuilder
-  ) {
-
-    this.createForm();
-  }
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     const usuarioString = localStorage.getItem('usuario');
@@ -46,7 +39,7 @@ export class EvaluarComponent {
 
       if (
         RolUsuarioEnum[usuario.rol].toString() ===
-          RolUsuarioEnum.PROFESOR.toString() ||
+          RolUsuarioEnum.ESTUDIANTE.toString() ||
         RolUsuarioEnum[usuario.rol].toString() ===
           RolUsuarioEnum.ADMINISTRADOR.toString()
       ) {
@@ -97,13 +90,6 @@ export class EvaluarComponent {
         );
       }
     );
-  }
-
-  createForm() {
-    this.tesisForm = this.fb.group({
-      calificacion: ['', Validators.required],
-      observaciones: ['', Validators.required],
-    });
   }
 
   descargar(dato: any): void {

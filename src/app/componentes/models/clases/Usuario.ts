@@ -20,7 +20,8 @@ export class Usuario {
   password: string;
   programaEnum: ProgramaEnum;
   fechaCreacion: Date;
-  estadoCuentaEnum : EstadoCuentaEnum;
+  nombreCompleto: string;
+  estadoCuentaEnum: EstadoCuentaEnum;
 
   constructor(
     idUsuario: number,
@@ -38,7 +39,8 @@ export class Usuario {
     password: string,
     programaEnum: ProgramaEnum,
     fechaCreacion: Date,
-    EstadoCuentaEnum : EstadoCuentaEnum
+    nombreCompleto: string,
+    EstadoCuentaEnum: EstadoCuentaEnum
   ) {
     this.idUsuario = idUsuario;
     this.nombre = nombre;
@@ -55,7 +57,7 @@ export class Usuario {
     this.password = password;
     this.programaEnum = programaEnum;
     this.fechaCreacion = fechaCreacion;
+    this.nombreCompleto = nombreCompleto;
     this.estadoCuentaEnum = EstadoCuentaEnum;
   }
-
 }
