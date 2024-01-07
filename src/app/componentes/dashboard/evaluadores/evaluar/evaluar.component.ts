@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { saveAs } from 'file-saver';
+import { DialogoConfirmarComponent } from 'src/app/componentes/compartidos/dialogo-confirmar/dialogo-confirmar.component';
 import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { TesisEstudiante } from 'src/app/componentes/models/clases/TesisEstudiante';
@@ -24,8 +25,8 @@ export class EvaluarComponent {
   CalificadaEnum: CalificadaEnum = CalificadaEnum.SIN_CALIFICAR;
 
   tesisForm!: FormGroup;
+  cargando: boolean = true;
 
-  panelOpenState = false;
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -34,7 +35,6 @@ export class EvaluarComponent {
     private route: ActivatedRoute,
     private fb: FormBuilder
   ) {
-
     this.createForm();
   }
 
@@ -79,6 +79,9 @@ export class EvaluarComponent {
   }
 
   consultarDetalleTesis(idTesis: number): void {
+    // Iniciar el spinner antes de la llamada a la API
+    this.cargando = true;
+
     // Lógica para consultar el detalle de la tesis
     this.tesisService.consultaDetalleTesis(idTesis).subscribe(
       (data: any) => {
@@ -86,15 +89,26 @@ export class EvaluarComponent {
           this.tesis = data.tesisDTO;
           this.tesisEstudiantes = data.tesisEstudianteDTO;
           console.log(this.tesis);
+
+          this.tesisForm.patchValue({
+            calificacion: this.tesis.calificacion || null,
+            observaciones: this.tesis.observaciones || '',
+          });
         } else {
           console.log(data.mensaje);
         }
+
+        // Detener el spinner después de obtener los datos
+        this.cargando = false;
       },
       (error) => {
         this.dialogo(
           'Error',
           'Ha ocurrido un error al consultar el detalle de la tesis'
         );
+
+        // Detener el spinner en caso de error
+        this.cargando = false;
       }
     );
   }
@@ -119,6 +133,46 @@ export class EvaluarComponent {
     saveAs(blob, nombreArchivo);
   }
 
+  guardarCalificacion() {
+    const dialogRef = this.dialog.open(DialogoConfirmarComponent, {
+      data: {
+        mensaje: 'Guardar Calificación',
+        mensajeDialogo: '¿Estás seguro que quiere guardar los cambios?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        if (this.tesisForm.valid) {
+          // Guardar la información aquí, por ejemplo, usando un servicio
+          const calificacion = this.tesisForm.get('calificacion')?.value;
+          const observaciones = this.tesisForm.get('observaciones')?.value;
+          this.tesis.calificacion = calificacion;
+          this.tesis.observaciones = observaciones;
+          this.tesisService.evaluarTesis(this.tesis).subscribe(
+            (data) => {
+              this.dialogo(
+                'Éxito',
+                'Se ha guardado la calificación de la tesis'
+              );
+              this.router.navigate(['/evaluar-tesis']);
+            },
+            (error) => {
+              this.dialogo(
+                'Error',
+                'Ha ocurrido un error al guardar la calificación de la tesis'
+              );
+            }
+          );
+
+          console.log('Calificación guardada:', calificacion);
+          console.log('Observaciones guardadas:', observaciones);
+        }
+      }
+      // Si result es false, el usuario canceló la acción
+    });
+  }
+
   dialogo(mensaje: string, mensajeDialogo: string) {
     this.dialog.open(DialogoComponent, {
       data: {
@@ -126,5 +180,9 @@ export class EvaluarComponent {
         mensajeDialogo: mensajeDialogo,
       },
     });
+  }
+
+  imprimir(): void {
+    window.print();
   }
 }

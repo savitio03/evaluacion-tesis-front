@@ -79,7 +79,6 @@ export class EvaluarTesisComponent implements OnInit {
     } else {
       console.log('No hay usuario en el localStorage');
       this.noLogueado('Debe iniciar sesión para acceder a esta funcionalidad.');
-      this.router.navigate(['/login']);
     }
   }
 

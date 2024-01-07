@@ -1,8 +1,6 @@
-import { DatePipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
-import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 import { Tesis } from 'src/app/componentes/models/clases/Tesis';
 import { TesisEstudiante } from 'src/app/componentes/models/clases/TesisEstudiante';
 import { Usuario } from 'src/app/componentes/models/clases/Usuario';
@@ -10,24 +8,27 @@ import { CalificadaEnum } from 'src/app/componentes/models/enums/CalificadaEnum'
 import { RolUsuarioEnum } from 'src/app/componentes/models/enums/RolUsuarioEnum';
 import { TesisService } from 'src/app/componentes/services/tesis.service';
 import { saveAs } from 'file-saver';
+import { DialogoComponent } from 'src/app/componentes/compartidos/dialogo/dialogo.component';
 
 @Component({
   selector: 'app-detalles',
   templateUrl: './detalles.component.html',
   styleUrls: ['./detalles.component.css'],
 })
-export class DetallesComponent {
+export class DetallesComponent implements OnInit {
   id: number | null = null;
   tesis!: Tesis;
   tesisEstudiantes: TesisEstudiante[] = [];
-  CalificadaEnum: CalificadaEnum = CalificadaEnum.SIN_CALIFICAR;
+  calificadaEnum: String = CalificadaEnum.CALIFICADA.toString();
+  estadoCalificacionTesis: String = '';
 
+  cargando: boolean = true; // Agregado para controlar el estado de carga
   panelOpenState = false;
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private tesisService: TesisService,
-    private datePipe: DatePipe,
     private route: ActivatedRoute
   ) {}
 
@@ -72,22 +73,22 @@ export class DetallesComponent {
   }
 
   consultarDetalleTesis(idTesis: number): void {
-    // Lógica para consultar el detalle de la tesis
     this.tesisService.consultaDetalleTesis(idTesis).subscribe(
       (data: any) => {
         if (data && data.exitoso) {
           this.tesis = data.tesisDTO;
           this.tesisEstudiantes = data.tesisEstudianteDTO;
           console.log(this.tesis);
+          this.estadoCalificacionTesis = CalificadaEnum[this.tesis.calificada].toString();
         } else {
           console.log(data.mensaje);
         }
+
+        this.cargando = false; // Marcar como cargado después de obtener los datos
       },
       (error) => {
-        this.dialogo(
-          'Error',
-          'Ha ocurrido un error al consultar el detalle de la tesis'
-        );
+        this.dialogo('Error', 'Ha ocurrido un error al consultar el detalle de la tesis');
+        this.cargando = false; // Marcar como cargado en caso de error
       }
     );
   }
@@ -112,5 +113,9 @@ export class DetallesComponent {
         mensajeDialogo: mensajeDialogo,
       },
     });
+  }
+
+  imprimir(): void {
+    window.print();
   }
 }

@@ -1,78 +1,80 @@
-<div class="detalles">
-  <ng-container *ngIf="tesis; else mensajeNoDetalles">
-    <div class="mat-card detalles-container">
-      <div class="titulo">
-        <h2 class="text-center">Detalles</h2>
-      </div>
-
-      <div class="detalle">
-        <div class="item-detalle">
-          <h3>Nombre tesis</h3>
-          <p>{{ tesis.nombre }}</p>
-        </div>
-
-        <mat-divider></mat-divider>
-        <div class="item-detalle">
-          <h3>Descripción</h3>
-          <p>{{ tesis.descripcion }}</p>
-        </div>
-
-        <mat-divider></mat-divider>
-        <div class="item-detalle">
-          <h3>Ponentes</h3>
-          <p class="item-ponente" *ngFor="let estudiante of tesisEstudiantes">{{
-            estudiante.usuarioDTOEstudiante.nombreCompleto }}</p>
-        </div>
-      </div>
-
-
-      <mat-accordion *ngIf="tesis">
-        <mat-expansion-panel>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              <p>Estado tesis:</p>
-            </mat-panel-title>
-            <mat-panel-description>
-              {{ tesis.calificada }}
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="calificada">
-            <form [formGroup]="tesisForm">
-              <div class="calificacion-container">
-                <h3>Calificación</h3>
-                <mat-form-field id="calificacion-input">
-                  <input matInput formControlName="calificacion" type="number">
-                </mat-form-field>
-              </div>
-
-              <mat-divider></mat-divider>
-
-              <div class="observaciones-container">
-                <h3>Observaciones</h3>
-                <mat-form-field class="full-width">
-                  <textarea matInput formControlName="observaciones"></textarea>
-                </mat-form-field>
-              </div>
-            </form>
-          </div>
-        </mat-expansion-panel>
-      </mat-accordion>
-
-
-
-      <div class="mat-card-actions">
-        <!-- Botón para descargar el documento -->
-        <button mat-raised-button color="warn" (click)="descargar(tesis)">Descargar Documento</button>
-
-        <!-- Botón para regresar -->
-        <button mat-raised-button color="accent" routerLink="evaluaciones">Regresar</button>
-      </div>
-    </div>
-  </ng-container>
+<!-- evaluar.component.html -->
+<div class="spinner-container" *ngIf="cargando; else contenidoCargado">
+  <mat-progress-spinner mode="indeterminate" diameter="50" color="warn"></mat-progress-spinner>
 </div>
 
-<ng-template #mensajeNoDetalles>
-  <div class="mensaje-no-tesis">
-    <h4>No hay detalles disponibles</h4>
+<ng-template #contenidoCargado>
+  <div class="detalles">
+    <ng-container *ngIf="tesis; else mensajeNoDetalles">
+      <div class="mat-card detalles-container">
+        <div class="titulo">
+          <h2 class="text-center">Detalles</h2>
+        </div>
+
+        <div class="detalle">
+          <div class="item-detalle">
+            <h3>Nombre tesis</h3>
+            <p>{{ tesis.nombre }}</p>
+          </div>
+
+          <mat-divider></mat-divider>
+          <div class="item-detalle">
+            <h3>Descripción</h3>
+            <p>{{ tesis.descripcion }}</p>
+          </div>
+
+          <mat-divider></mat-divider>
+          <div class="item-detalle">
+            <h3>Ponentes</h3>
+            <p class="item-ponente" *ngFor="let estudiante of tesisEstudiantes">{{ estudiante.usuarioDTOEstudiante.nombreCompleto }}</p>
+          </div>
+        </div>
+
+        <mat-accordion *ngIf="tesis">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                <p>Estado tesis:</p>
+              </mat-panel-title>
+              <mat-panel-description>
+                {{ tesis.calificada }}
+              </mat-panel-description>
+            </mat-expansion-panel-header>
+            <div class="calificada">
+              <form [formGroup]="tesisForm">
+                <div class="calificacion-container">
+                  <h3>Calificación</h3>
+                  <mat-form-field id="calificacion-input">
+                    <input matInput formControlName="calificacion" type="number">
+                  </mat-form-field>
+                </div>
+
+                <mat-divider></mat-divider>
+
+                <div class="observaciones-container">
+                  <h3>Observaciones</h3>
+                  <mat-form-field class="full-width">
+                    <textarea matInput formControlName="observaciones"></textarea>
+                  </mat-form-field>
+                </div>
+                <button mat-raised-button color="accent" (click)="guardarCalificacion()">Guardar Calificación</button>
+              </form>
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+
+        <div class="mat-card-actions">
+          <button mat-raised-button color="warn" (click)="descargar(tesis)">Descargar Documento</button>
+          <button mat-raised-button color="primary" (click)="imprimir()">Imprimir</button>
+          <button mat-raised-button color="accent" routerLink="evaluaciones">Regresar</button>
+        </div>
+      </div>
+    </ng-container>
   </div>
+
+  <ng-template #mensajeNoDetalles>
+    <div class="mensaje-no-tesis">
+      <h4>No hay detalles disponibles</h4>
+    </div>
+  </ng-template>
 </ng-template>
