@@ -155,7 +155,6 @@ export class EvaluarComponent {
                 'Éxito',
                 'Se ha guardado la calificación de la tesis'
               );
-              this.router.navigate(['/evaluar-tesis']);
             },
             (error) => {
               this.dialogo(
