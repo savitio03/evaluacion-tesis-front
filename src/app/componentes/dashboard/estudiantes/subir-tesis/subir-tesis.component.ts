@@ -150,8 +150,6 @@ export class SubirTesisComponent {
     );
     formData.append('archivo', this.archivoSeleccionado);
 
-    console.log('Datos y archivo a enviar:', this.archivoSeleccionado);
-
     // Enviar solicitud al servicio
     this.tesisService.guardarTesis(formData).subscribe(
       (data) => this.handleSuccessResponse(data),

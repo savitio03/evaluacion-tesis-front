@@ -27,6 +27,10 @@ export class EvaluarComponent {
   tesisForm!: FormGroup;
   cargando: boolean = true;
 
+  archivoSeleccionado!: File;
+
+  evaluacionExistente: boolean = false;
+
   constructor(
     public dialog: MatDialog,
     private router: Router,
@@ -90,6 +94,13 @@ export class EvaluarComponent {
           this.tesisEstudiantes = data.tesisEstudianteDTO;
           console.log(this.tesis);
 
+          if (
+            CalificadaEnum[this.tesis.calificada].toString ===
+            CalificadaEnum.CALIFICADA.toString
+          ) {
+            this.evaluacionExistente = true;
+            console.log(this.evaluacionExistente);
+          }
           this.tesisForm.patchValue({
             calificacion: this.tesis.calificacion || null,
             observaciones: this.tesis.observaciones || '',
@@ -113,11 +124,19 @@ export class EvaluarComponent {
     );
   }
 
+  cambiarEvaluacionExistente() {
+    this.evaluacionExistente = false;
+  }
+
   createForm() {
     this.tesisForm = this.fb.group({
       calificacion: ['', Validators.required],
       observaciones: ['', Validators.required],
     });
+  }
+
+  onFileSelected(event: any): void {
+    if (this.tesis) this.archivoSeleccionado = event.target.files[0];
   }
 
   descargar(dato: any): void {
@@ -133,6 +152,26 @@ export class EvaluarComponent {
     saveAs(blob, nombreArchivo);
   }
 
+  descargarArchivoSoporte(tesis: any): void {
+    if (tesis && tesis.documentoSoporte) {
+      const byteCharacters = atob(tesis.documentoSoporte);
+      const byteNumbers = new Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        byteNumbers[i] = byteCharacters.charCodeAt(i);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+
+      const blob = new Blob([byteArray], { type: 'application/pdf' });
+      const nombreArchivo = `documentoSoporteTesis.${tesis.extensionDocumentoSoporte}`;
+      saveAs(blob, nombreArchivo);
+    } else {
+      this.dialogo(
+        'Aviso',
+        'La tesis no tiene un documento de soporte para descargar.'
+      );
+    }
+  }
+
   guardarCalificacion() {
     const dialogRef = this.dialog.open(DialogoConfirmarComponent, {
       data: {
@@ -144,17 +183,30 @@ export class EvaluarComponent {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         if (this.tesisForm.valid) {
-          // Guardar la información aquí, por ejemplo, usando un servicio
-          const calificacion = this.tesisForm.get('calificacion')?.value;
-          const observaciones = this.tesisForm.get('observaciones')?.value;
-          this.tesis.calificacion = calificacion;
-          this.tesis.observaciones = observaciones;
-          this.tesisService.evaluarTesis(this.tesis).subscribe(
+          const tesisDTO = new Tesis();
+          tesisDTO.idTesis = this.tesis.idTesis;
+          tesisDTO.calificacion = this.tesisForm.get('calificacion')?.value;
+          tesisDTO.observaciones = this.tesisForm.get('observaciones')?.value;
+
+          // Crear objeto FormData y agregar valores
+          const formData = new FormData();
+          formData.append(
+            'tesisDTO',
+            new Blob([JSON.stringify(tesisDTO)], { type: 'application/json' })
+          );
+          formData.append('archivo', this.archivoSeleccionado);
+          console.log(this.archivoSeleccionado);
+
+          // Enviar solicitud al servicio
+          this.tesisService.evaluarTesis(formData).subscribe(
             (data) => {
               this.dialogo(
                 'Éxito',
                 'Se ha guardado la calificación de la tesis'
               );
+              setTimeout(() => {
+                window.location.reload();
+              }, 1500);
             },
             (error) => {
               this.dialogo(
@@ -163,9 +215,6 @@ export class EvaluarComponent {
               );
             }
           );
-
-          console.log('Calificación guardada:', calificacion);
-          console.log('Observaciones guardadas:', observaciones);
         }
       }
       // Si result es false, el usuario canceló la acción

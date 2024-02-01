@@ -25,8 +25,9 @@ export class TesisService {
     );
   }
 
-  evaluarTesis(tesis: Tesis): Observable<any> {
-    return this.http.post<Resultado>(`${this.apiUrl}/evaluarTesis`, tesis);
+  evaluarTesis(tesis: FormData): Observable<any> {
+    const headers = new HttpHeaders();
+    return this.http.post<Resultado>(`${this.apiUrl}/evaluarTesis`, tesis, { headers: headers });
   }
 
   guardarTesis(tesis: FormData): Observable<any> {

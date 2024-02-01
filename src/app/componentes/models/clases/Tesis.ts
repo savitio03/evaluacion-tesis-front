@@ -19,6 +19,7 @@ export class Tesis {
   estudiante2!: Usuario;
   fechaCreacion!: string;
   extension!: string;
+  documentoSoporte!: Uint8Array;
 
   constructor() {}
 }
