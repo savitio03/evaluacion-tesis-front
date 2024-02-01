@@ -95,12 +95,13 @@ export class EvaluarComponent {
           console.log(this.tesis);
 
           if (
-            CalificadaEnum[this.tesis.calificada].toString ===
-            CalificadaEnum.CALIFICADA.toString
+            CalificadaEnum[this.tesis.calificada].toString() ==
+            CalificadaEnum.CALIFICADA.toString()
           ) {
             this.evaluacionExistente = true;
             console.log(this.evaluacionExistente);
           }
+
           this.tesisForm.patchValue({
             calificacion: this.tesis.calificacion || null,
             observaciones: this.tesis.observaciones || '',
@@ -204,9 +205,12 @@ export class EvaluarComponent {
                 'Éxito',
                 'Se ha guardado la calificación de la tesis'
               );
+
+              this.evaluacionExistente = true;
               setTimeout(() => {
                 window.location.reload();
-              }, 1500);
+              }, 1000);
+
             },
             (error) => {
               this.dialogo(
